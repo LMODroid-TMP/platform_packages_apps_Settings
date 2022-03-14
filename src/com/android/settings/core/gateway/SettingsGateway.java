@@ -192,6 +192,8 @@ import com.android.settings.wifi.p2p.WifiP2pSettings;
 import com.android.settings.wifi.savedaccesspoints2.SavedAccessPointsWifiSettings2;
 import com.android.settings.wifi.tether.WifiTetherSettings;
 
+import com.android.settings.libremobileos.tether.WifiTetherClientManager;
+
 public class SettingsGateway {
 
     /**
@@ -371,7 +373,8 @@ public class SettingsGateway {
             RegionalPreferencesEntriesFragment.class.getName(),
             BatteryInfoFragment.class.getName(),
             UserAspectRatioDetails.class.getName(),
-            ScreenTimeoutSettings.class.getName()
+            ScreenTimeoutSettings.class.getName(),
+            WifiTetherClientManager.class.getName()
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {
