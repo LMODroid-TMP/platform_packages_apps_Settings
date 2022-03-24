@@ -61,6 +61,11 @@
             android:summary="@string/summary_placeholder"
             settings:keywords="@string/keywords_biometric_settings" />
 
+        <!-- App lock -->
+        <com.android.settingslib.RestrictedPreference
+            android:key="app_lock"
+            android:title="@string/app_lock_title" />
+
         <com.libremobileos.support.preferences.GlobalSettingListPreference
             android:key="trust_restrict_usb"
             android:title="@string/trust_restrict_usb_title"
