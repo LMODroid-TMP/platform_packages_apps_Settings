@@ -198,7 +198,8 @@ public class FingerprintSettings extends SubSettings {
             if (manager == null || !manager.isHardwareDetected()) {
                 return null;
             }
-            if (manager.isPowerbuttonFps()) {
+            if (manager.isPowerbuttonFps() && context.getResources().getBoolean(
+                    com.android.internal.R.bool.config_fingerprintWakeAndUnlock)) {
                 controllers.add(
                         new FingerprintUnlockCategoryController(
                                 context,
@@ -287,6 +288,7 @@ public class FingerprintSettings extends SubSettings {
         private PreferenceCategory mFingerprintsEnrolledCategory;
         private PreferenceCategory mFingerprintUnlockCategory;
         private PreferenceCategory mFingerprintUnlockFooter;
+        private boolean mFingerprintWakeAndUnlock;
 
         private FingerprintManager mFingerprintManager;
         private FingerprintUpdater mFingerprintUpdater;
@@ -464,6 +466,8 @@ public class FingerprintSettings extends SubSettings {
             mFingerprintManager = Utils.getFingerprintManagerOrNull(activity);
             mFingerprintUpdater = new FingerprintUpdater(activity, mFingerprintManager);
             mSensorProperties = mFingerprintManager.getSensorPropertiesInternal();
+            mFingerprintWakeAndUnlock = getContext().getResources().getBoolean(
+                    com.android.internal.R.bool.config_fingerprintWakeAndUnlock);
 
             mToken = getIntent().getByteArrayExtra(
                     ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
@@ -569,7 +573,7 @@ public class FingerprintSettings extends SubSettings {
                         R.string.security_fingerprint_disclaimer_lockscreen_disabled_2
                 );
                 if (helpIntent != null) {
-                    if (isSfps()) {
+                    if (isSfps() && mFingerprintWakeAndUnlock) {
                         column2.mLearnMoreOverrideText = getText(
                                 R.string.security_settings_fingerprint_settings_footer_learn_more);
                     }
@@ -670,7 +674,7 @@ public class FingerprintSettings extends SubSettings {
             // This needs to be after setting ids, otherwise
             // |mRequireScreenOnToAuthPreferenceController.isChecked| is always checking the primary
             // user instead of the user with |mUserId|.
-            if (isSfps() || (screenOffUnlockUdfps() && isUltrasnoicUdfps())) {
+            if ((isSfps() && mFingerprintWakeAndUnlock) || (screenOffUnlockUdfps() && isUltrasnoicUdfps())) {
                 scrollToPreference(fpPrefKey);
                 addFingerprintUnlockCategory();
             }
@@ -720,7 +724,7 @@ public class FingerprintSettings extends SubSettings {
 
         private void addFingerprintUnlockCategory() {
             mFingerprintUnlockCategory = findPreference(KEY_FINGERPRINT_UNLOCK_CATEGORY);
-            if (isSfps()) {
+            if (isSfps() && mFingerprintWakeAndUnlock) {
                 // For both SFPS "screen on to auth" and "rest to unlock"
                 final Preference restToUnlockPreference = FeatureFactory.getFeatureFactory()
                         .getFingerprintFeatureProvider()
@@ -740,7 +744,9 @@ public class FingerprintSettings extends SubSettings {
             } else if (screenOffUnlockUdfps() && isUltrasnoicUdfps()) {
                 setupFingerprintUnlockCategoryPreferencesForScreenOffUnlock();
             }
-            updateFingerprintUnlockCategoryVisibility();
+            if (mFingerprintUnlockCategoryPreferenceController != null) {
+                updateFingerprintUnlockCategoryVisibility();
+            }
         }
 
         private void updateFingerprintUnlockCategoryVisibility() {
@@ -1017,7 +1023,8 @@ public class FingerprintSettings extends SubSettings {
         private List<AbstractPreferenceController> buildPreferenceControllers(Context context) {
             final List<AbstractPreferenceController> controllers =
                     createThePreferenceControllers(context);
-            if (isSfps()) {
+            if (isSfps() && context.getResources().getBoolean(
+                    com.android.internal.R.bool.config_fingerprintWakeAndUnlock)) {
                 for (AbstractPreferenceController controller : controllers) {
                     if (controller.getPreferenceKey() == KEY_FINGERPRINT_UNLOCK_CATEGORY) {
                         mFingerprintUnlockCategoryPreferenceController =
