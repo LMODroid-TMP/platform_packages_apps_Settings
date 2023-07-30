@@ -354,7 +354,7 @@ public class FingerprintSettings extends SubSettings {
             mFingerprintUpdater = new FingerprintUpdater(activity, mFingerprintManager);
             mSensorProperties = mFingerprintManager.getSensorPropertiesInternal();
             mFingerprintWakeAndUnlock = getContext().getResources().getBoolean(
-                    org.lineageos.platform.internal.R.bool.config_fingerprintWakeAndUnlock);
+                    com.android.internal.R.bool.config_fingerprintWakeAndUnlock);
 
             mToken = getIntent().getByteArrayExtra(
                     ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
