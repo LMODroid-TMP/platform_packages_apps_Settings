@@ -567,6 +567,7 @@
     <!-- Access QS on lockscreen -->
     <string name="show_qs_on_secure_keyguard_title">Quick settings</string>
     <string name="show_qs_on_secure_keyguard_summary">Allow toggling quick settings on secure lockscreen</string>
+<<<<<<< HEAD
 
     <!-- Timeout entries -->
     <string name="timeout_summary_never">Never</string>
@@ -615,4 +616,6 @@
     <string name="data_usage_app_restrict_background_all_summary">Enable network usage in the background</string>
 =======
 >>>>>>> parent of a7438168ad (Settings: Add support for global cleartext penalties)
+=======
+>>>>>>> parent of 971b07d8c3 (Add setting for timeout-reboot)
 </resources>
