@@ -310,8 +310,8 @@ public class WifiTetherSettings extends RestrictedDashboardFragment
         if (!mWifiTetherViewModel.isSpeedFeatureAvailable()) {
             mApBandPrefController.setupBands(configBuilder);
         }
-        configBuilder.setAutoShutdownEnabled(
-                mWifiTetherAutoOffPreferenceController.isEnabled());
+        // configBuilder.setAutoShutdownEnabled(
+        //         mWifiTetherAutoOffPreferenceController.isEnabled());
         configBuilder.setHiddenSsid(mHiddenSsidPrefController.isHiddenSsidEnabled());
         mAutoOffPrefController.updateConfig(configBuilder);
         mClientPrefController.updateConfig(configBuilder);
