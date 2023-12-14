@@ -5,6 +5,7 @@
  */
 package com.android.settings.libremobileos.statusbar;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
