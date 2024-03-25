@@ -23,6 +23,7 @@ import android.provider.Settings;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.preference.Preference;
+import androidx.preference.SwitchPreferenceCompat;
 import androidx.preference.TwoStatePreference;
 
 import com.android.settings.core.PreferenceControllerMixin;
@@ -69,6 +70,6 @@ public final class EnableBlursPreferenceController extends AbstractPreferenceCon
     public void updateState(Preference preference) {
         boolean isEnabled = Settings.Global.getInt(mContext.getContentResolver(),
                     Settings.Global.DISABLE_WINDOW_BLURS, 0) == 0;
-        ((TwoStatePreference) preference).setChecked(isEnabled);
+        ((SwitchPreferenceCompat) preference).setChecked(isEnabled);
     }
 }
